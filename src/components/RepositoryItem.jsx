@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   },
   topRightContainer: {
     display: 'flex',
-    paddingLeft: 10
+    paddingLeft: 10,
+    flexShrink: 1
   },
   statsContainer: {
     paddingTop: 5,
@@ -26,7 +27,7 @@ const styles = StyleSheet.create({
   },
   topRightItem: {
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   statItem: {
     flexGrow: 1
