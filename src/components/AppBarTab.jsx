@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBarTab = ({ name, link }) => {
+const AppBarTab = ({ name, link, onPress }) => {
   return (
-    <Link to={link} component={TouchableWithoutFeedback} >
+    <Link to={link} component={TouchableWithoutFeedback} onPress={onPress} >
       <Text color="appTab" fontWeight="bold" style={styles.tab}>{name}</Text>
     </Link>
   );
