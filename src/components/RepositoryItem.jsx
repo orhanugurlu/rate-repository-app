@@ -48,8 +48,8 @@ const RepositoryItem = ({ item }) => {
           source={{ uri: item.ownerAvatarUrl }}
         />
         <View style={styles.topRightContainer}>
-          <Text fontSize='subheading' fontWeight='bold' style={styles.topRightItem}>{item.fullName}</Text>
-          <Text color='textSecondary' style={styles.topRightItem}>{item.description}</Text>
+          <Text testID='fullName' fontSize='subheading' fontWeight='bold' style={styles.topRightItem}>{item.fullName}</Text>
+          <Text testID='description' color='textSecondary' style={styles.topRightItem}>{item.description}</Text>
           <Tag text={item.language} style={styles.topRightItem} />
         </View>
       </View>

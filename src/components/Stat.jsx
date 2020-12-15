@@ -24,7 +24,7 @@ const roundValue = (value) => {
 const Stat = ({ name, value, round = true, style }) => {
   return (
     <View style={{ ...style, ...styles.container }}>
-      <Text fontWeight='bold'>{round ? roundValue(value) : value}</Text>
+      <Text testID={name} fontWeight='bold'>{round ? roundValue(value) : value}</Text>
       <Text>{name}</Text>
     </View >
   );

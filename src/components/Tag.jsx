@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 const Tag = ({ text, style }) => {
   return (
     <View style={styles.container}>
-      <Text color='tag' style={{ ...styles.item, ...style }}>{text}</Text>
+      <Text testID='language' color='tag' style={{ ...styles.item, ...style }}>{text}</Text>
     </View>
   );
 };
