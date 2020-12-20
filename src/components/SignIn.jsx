@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import FormikTextInput from './FormikTextInput';
 import Text from './Text';
 import useSignIn from '../hooks/useSignIn';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
   form: {
@@ -13,12 +14,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     padding: 10,
   },
-  button: {
-    padding: 10,
-    margin: 5,
-    textAlign: 'center',
-    borderRadius: 3
-  }
+  button: theme.button,
 });
 
 const initialValues = {

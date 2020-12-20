@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, View, StyleSheet } from 'react-native';
+import { Image, View, StyleSheet, TouchableWithoutFeedback, Linking } from 'react-native';
+import useRepositoryUrl from '../hooks/useRepositoryUrl';
 
 import theme from '../theme';
 import Stat from './Stat';
@@ -37,9 +38,19 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 5,
   },
+  button: theme.button
 });
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showOpenButton = false }) => {
+  const { data, loading } = useRepositoryUrl(item ? item.id : null);
+  if (!item) {
+    return null;
+  }
+
+  const onPressLink = (url) => {
+    Linking.openURL(url);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topContainer}>
@@ -59,6 +70,12 @@ const RepositoryItem = ({ item }) => {
         <Stat name='Reviews' value={item.reviewCount} style={styles.statItem} />
         <Stat name='Rating' value={item.ratingAverage} round={false} style={styles.statItem} />
       </View>
+      {showOpenButton && !loading && data &&
+        <View>
+          <TouchableWithoutFeedback onPress={() => onPressLink(data.repository.url)}>
+            <Text color='tag' fontSize='subheading' fontWeight='bold' style={styles.button}>Open in GitHub</Text>
+          </TouchableWithoutFeedback>
+        </View>}
     </View>
   );
 };

@@ -27,6 +27,12 @@ const theme = {
     normal: '400',
     bold: '700',
   },
+  button: {
+    padding: 10,
+    margin: 5,
+    textAlign: 'center',
+    borderRadius: 3
+  }
 };
 
 export default theme;
