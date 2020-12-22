@@ -1,5 +1,7 @@
 import { Platform } from "react-native";
 
+const mainColor = '#e1e4e8';
+
 const theme = {
   colors: {
     textPrimary: '#24292e',
@@ -8,7 +10,7 @@ const theme = {
     primary: '#0366d6',
     appTab: '#24292e',
     textAppTab: '#ffffff',
-    main: '#e1e4e8',
+    main: mainColor,
     item: '#ffffff',
     textError: '#d73a4a'
   },
@@ -32,7 +34,11 @@ const theme = {
     margin: 5,
     textAlign: 'center',
     borderRadius: 3
-  }
+  },
+  separator: {
+    height: 10,
+    backgroundColor: mainColor
+  },
 };
 
 export default theme;

@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/react-hooks';
 
-import { GET_REPOSITORY_URL } from '../graphql/queries';
+import { GET_REPOSITORY_DETAIL } from '../graphql/queries';
 
-const useRepositoryUrl = (id) => {
+const useRepositoryDetail = (id) => {
   if (!id) {
     return { data: null, loading: false };
   }
   const { data, loading } =
-    useQuery(GET_REPOSITORY_URL, {
+    useQuery(GET_REPOSITORY_DETAIL, {
       fetchPolicy: 'cache-and-network',
       variables: { id },
     });
@@ -15,4 +15,4 @@ const useRepositoryUrl = (id) => {
   return { data, loading };
 };
 
-export default useRepositoryUrl;
+export default useRepositoryDetail;

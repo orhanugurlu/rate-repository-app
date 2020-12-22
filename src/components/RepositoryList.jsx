@@ -1,19 +1,10 @@
 import React from 'react';
-import { FlatList, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 
-import theme from '../theme';
 import RepositoryItem from './RepositoryItem';
+import ItemSeparator from './ItemSeperator';
 import useRepositories from '../hooks/useRepositories';
 import { useHistory } from 'react-router-native';
-
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-    backgroundColor: theme.colors.main
-  },
-});
-
-const ItemSeparator = () => <View style={styles.separator} />;
 
 export const RepositoryListContainer = ({ repositories }) => {
   const history = useHistory();

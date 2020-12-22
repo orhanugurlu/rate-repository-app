@@ -5,8 +5,8 @@ import { Route, Switch, Redirect, useRouteMatch } from 'react-router-native';
 import RepositoryList from './RepositoryList';
 import AppBar from './AppBar';
 import SignIn from './SignIn';
-import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
+import RepositoryDetail from './RepositoryDetail';
 
 const Main = () => {
   const { data } = useRepositories();
@@ -27,7 +27,7 @@ const Main = () => {
           <SignIn />
         </Route>
         <Route path="/repo/:id">
-          <RepositoryItem item={repo} showOpenButton={true} />
+          <RepositoryDetail item={repo} />
         </Route>
         <Redirect to='/' />
       </Switch>
