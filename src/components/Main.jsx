@@ -7,6 +7,7 @@ import AppBar from './AppBar';
 import SignIn from './SignIn';
 import useRepositories from '../hooks/useRepositories';
 import RepositoryDetail from './RepositoryDetail';
+import CreateReview from './CreateReview';
 
 const Main = () => {
   const { data } = useRepositories();
@@ -28,6 +29,9 @@ const Main = () => {
         </Route>
         <Route path="/repo/:id">
           <RepositoryDetail item={repo} />
+        </Route>
+        <Route path='/createReview' exact>
+          <CreateReview />
         </Route>
         <Redirect to='/' />
       </Switch>
