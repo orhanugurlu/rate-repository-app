@@ -23,19 +23,16 @@ const AppBar = () => {
       fetchPolicy: 'cache-and-network',
     });
   const signOut = useSignOut();
+  const signedIn = !loading && data != null && data.authorizedUser != null;
 
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
         <AppBarTab link="/" name="Repositories" />
-        {!loading && data && data.authorizedUser &&
-          <AppBarTab link="/createReview" name="Create a review" />
-        }
-        {loading || !data || !data.authorizedUser ?
-          <AppBarTab link="/signin" name="Sign In" />
-          :
-          <AppBarTab name="Sign Out" onPress={() => signOut()} />
-        }
+        {signedIn && <AppBarTab link="/createReview" name="Create a review" />}
+        {signedIn && <AppBarTab name="Sign Out" onPress={() => signOut()} />}
+        {!signedIn && <AppBarTab link="/signIn" name="Sign In" />}
+        {!signedIn && <AppBarTab link="/signUp" name="Sign Up" />}
       </ScrollView>
     </View>
   );

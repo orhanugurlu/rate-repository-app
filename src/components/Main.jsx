@@ -8,6 +8,7 @@ import SignIn from './SignIn';
 import useRepositories from '../hooks/useRepositories';
 import RepositoryDetail from './RepositoryDetail';
 import CreateReview from './CreateReview';
+import SignUp from './SignUp';
 
 const Main = () => {
   const { data } = useRepositories();
@@ -24,7 +25,7 @@ const Main = () => {
         <Route path='/' exact>
           <RepositoryList />
         </Route>
-        <Route path='/signin' exact>
+        <Route path='/signIn' exact>
           <SignIn />
         </Route>
         <Route path="/repo/:id">
@@ -32,6 +33,9 @@ const Main = () => {
         </Route>
         <Route path='/createReview' exact>
           <CreateReview />
+        </Route>
+        <Route path='/signUp' exact>
+          <SignUp />
         </Route>
         <Redirect to='/' />
       </Switch>
