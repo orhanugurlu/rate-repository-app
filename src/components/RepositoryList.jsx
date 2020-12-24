@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
+import { useHistory } from 'react-router-native';
+import { Picker } from '@react-native-community/picker';
 
 import RepositoryItem from './RepositoryItem';
 import ItemSeparator from './ItemSeperator';
-import useRepositories from '../hooks/useRepositories';
-import { useHistory } from 'react-router-native';
+import theme from '../theme';
 
-export const RepositoryListContainer = ({ repositories }) => {
+const SortCriteriaSelect = ({ setSortCriteria }) => {
+  const [selected, setSelected] = useState("latest");
+  //  Cannot figure out why selected return to default when tab changes.
+  //  Therefore, for now make also sorting sync with what we have in select.
+  setSortCriteria(selected);
+  return (
+    <Picker
+      prompt='Select an item...'
+      selectedValue={selected}
+      style={{
+        color: theme.colors.textPrimary,
+        fontSize: theme.fontSizes.body,
+        fontFamily: theme.fonts.main,
+        fontWeight: theme.fontWeights.normal,
+        padding: 10
+      }}
+      // eslint-disable-next-line no-unused-vars
+      onValueChange={(itemValue, itemIndex) => {
+        setSelected(itemValue);
+        setSortCriteria(itemValue);
+      }}>
+      <Picker.Item label="Latest Repositories" value="latest" />
+      <Picker.Item label="Highest rated repositories" value="highest" />
+      <Picker.Item label="Lowest rated repositories" value="lowest" />
+    </Picker>
+  );
+};
+
+export const RepositoryListContainer = ({ repositories, setSortCriteria }) => {
   const history = useHistory();
 
   // Get the nodes from the edges array
@@ -18,6 +47,7 @@ export const RepositoryListContainer = ({ repositories }) => {
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
+      ListHeaderComponent={SortCriteriaSelect({ setSortCriteria })}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
         <TouchableOpacity onPress={() => history.push(`/repo/${item.id}`)}>
@@ -28,10 +58,8 @@ export const RepositoryListContainer = ({ repositories }) => {
   );
 };
 
-const RepositoryList = () => {
-  const { data } = useRepositories();
-
-  return <RepositoryListContainer repositories={data ? data.repositories : null} />;
+const RepositoryList = ({ data, setSortCriteria }) => {
+  return <RepositoryListContainer repositories={data ? data.repositories : null} setSortCriteria={setSortCriteria} />;
 };
 
 export default RepositoryList;
