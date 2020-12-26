@@ -1,14 +1,15 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import useRepositoryUrl from '../hooks/useRepositoryDetail';
+import useRepositoryDetail from '../../hooks/useRepositoryDetail';
 
-import ItemSeparator from './ItemSeperator';
+import ItemSeparator from '../ItemSeperator';
 import RepositoryDetailHeader from './RepositoryDetailHeader';
 import ReviewItem from './ReviewItem';
 
-const RepositoryDetail = ({ item }) => {
-  const { data, loading } = useRepositoryUrl(item.id);
-  if (!item || loading || !data) {
+const RepositoryDetail = ({ id }) => {
+  const { data, loading } = useRepositoryDetail(id);
+
+  if (!id || loading || !data) {
     return null;
   }
 
@@ -18,7 +19,7 @@ const RepositoryDetail = ({ item }) => {
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
-      ListHeaderComponent={() => <RepositoryDetailHeader repo={item} detail={data} />}
+      ListHeaderComponent={() => <RepositoryDetailHeader repo={data.repository} />}
     />
   );
 };

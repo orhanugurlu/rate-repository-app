@@ -31,6 +31,14 @@ export const GET_REPOSITORY_DETAIL = gql`
   query repositoryDetail($id: ID!) {
     repository(id: $id) {
       id
+      fullName
+      description
+      language
+      forksCount
+      stargazersCount
+      ratingAverage
+      reviewCount
+      ownerAvatarUrl
       url
       reviews {
         edges {
