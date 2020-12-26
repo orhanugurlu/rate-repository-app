@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Route, Switch, Redirect, useRouteMatch } from 'react-router-native';
+import { useDebounce } from 'use-debounce/lib';
 
 import RepositoryList from './RepositoryList';
 import AppBar from './AppBar';
@@ -13,7 +14,9 @@ import SignUp from './SignUp';
 const Main = () => {
   const [orderBy, setOrderBy] = useState('CREATED_AT');
   const [orderDirection, setOrderDirection] = useState('DESC');
-  const { data } = useRepositories({ orderBy, orderDirection });
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [debounceSearchKeyword] = useDebounce(searchKeyword, 500);
+  const { data } = useRepositories({ orderBy, orderDirection, searchKeyword: debounceSearchKeyword });
   const match = useRouteMatch('/repo/:id');
 
   const setSortCriteria = (criteria) => {
@@ -38,7 +41,7 @@ const Main = () => {
       <AppBar />
       <Switch>
         <Route path='/' exact>
-          <RepositoryList data={data} setSortCriteria={setSortCriteria} />
+          <RepositoryList data={data} setSortCriteria={setSortCriteria} setSearchKeyword={setSearchKeyword} />
         </Route>
         <Route path='/signIn' exact>
           <SignIn />
