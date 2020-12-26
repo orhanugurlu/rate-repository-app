@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     color: theme.colors.textLabel,
     backgroundColor: theme.colors.primary,
   },
+  colorDelete: {
+    color: theme.colors.textLabel,
+    backgroundColor: theme.colors.textError,
+  },
   colorError: {
     color: theme.colors.textError,
   },
@@ -41,6 +45,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === 'primary' && styles.colorPrimary,
     color === 'appTab' && styles.colorTextAppTab,
     color === 'tag' && styles.colorTag,
+    color === 'delete' && styles.colorDelete,
     color === 'error' && styles.colorError,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontWeight === 'bold' && styles.fontWeightBold,

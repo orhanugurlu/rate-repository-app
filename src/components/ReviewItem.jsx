@@ -1,14 +1,19 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native';
+import { useHistory } from 'react-router-native';
 
 import theme from '../theme';
 import Text from './Text';
 
 const styles = StyleSheet.create({
+  topContainer: {
+    display: 'flex',
+    alignItems: 'stretch',
+    padding: 10
+  },
   container: {
     display: 'flex',
     flexDirection: 'row',
-    padding: 10
   },
   rightContainer: {
     display: 'flex',
@@ -37,6 +42,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: theme.colors.primary
   },
+  button: {
+    ...theme.button,
+    flexGrow: 1
+  },
+  buttonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });
 
 const formatDate = (date) => {
@@ -53,20 +66,48 @@ const formatDate = (date) => {
   return [day, month, year].join('.');
 };
 
-const ReviewItem = ({ review, showUser }) => {
+const ReviewItem = ({ review, showUser, deleteReview }) => {
+  const history = useHistory();
+  const createAlert = (id) => {
+    Alert.alert(
+      "Delete review",
+      "Are you sure you you want to delete this review",
+      [
+        {
+          text: "CANCEL",
+          style: "cancel"
+        },
+        { text: "DELETE", onPress: () => deleteReview(id) }
+      ],
+      { cancelable: false }
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        <Text color='main' style={styles.rating}>{review.rating}</Text>
+    <View style={styles.topContainer}>
+      <View style={styles.container}>
+        <View style={styles.leftContainer}>
+          <Text color='main' style={styles.rating}>{review.rating}</Text>
+        </View>
+        <View style={styles.rightContainer}>
+          {showUser
+            ? <Text fontSize='subheading' fontWeight='bold' style={styles.rightItem}>{review.user.username}</Text>
+            : <Text fontSize='subheading' fontWeight='bold' style={styles.rightItem}>{review.repositoryId.replace('.', '/')}</Text>
+          }
+          <Text color='textSecondary' style={styles.rightItem}>{formatDate(review.createdAt)}</Text>
+          <Text color='textLabel' style={styles.rightItem}>{review.text}</Text>
+        </View>
       </View>
-      <View style={styles.rightContainer}>
-        {showUser
-          ? <Text fontSize='subheading' fontWeight='bold' style={styles.rightItem}>{review.user.username}</Text>
-          : <Text fontSize='subheading' fontWeight='bold' style={styles.rightItem}>{review.repositoryId.replace('.', '/')}</Text>
-        }
-        <Text color='textSecondary' style={styles.rightItem}>{formatDate(review.createdAt)}</Text>
-        <Text color='textLabel' style={styles.rightItem}>{review.text}</Text>
-      </View>
+      {!showUser &&
+        <View style={styles.buttonsContainer}>
+          <TouchableWithoutFeedback>
+            <Text color='tag' fontSize='subheading' fontWeight='bold' style={styles.button} onPress={() => history.push(`/repo/${review.repositoryId}`)}>View repository</Text>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback>
+            <Text color='delete' fontSize='subheading' fontWeight='bold' style={styles.button} onPress={() => createAlert(review.id)}>Delete review</Text>
+          </TouchableWithoutFeedback>
+        </View>
+      }
     </View>
   );
 };

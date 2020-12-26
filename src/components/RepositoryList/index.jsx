@@ -53,8 +53,8 @@ const RepositoryList = () => {
     }
   };
 
-  const onEndReached = () => {
-    fetchMore();
+  const onEndReached = async () => {
+    await fetchMore();
   };
 
   return <RepositoryListContainer
