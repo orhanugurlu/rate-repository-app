@@ -8,7 +8,7 @@ import ItemSeparator from '../ItemSeperator';
 import useRepositories from '../../hooks/useRepositories';
 import RepositoryListHeader from './RepositoryListHeader';
 
-export const RepositoryListContainer = ({ repositories, setSortCriteria, setSearchKeyword }) => {
+export const RepositoryListContainer = ({ repositories, setSortCriteria, setSearchKeyword, onEndReached }) => {
   const history = useHistory();
 
   // Get the nodes from the edges array
@@ -22,6 +22,8 @@ export const RepositoryListContainer = ({ repositories, setSortCriteria, setSear
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={RepositoryListHeader({ setSortCriteria, setSearchKeyword })}
       keyExtractor={(item) => item.id}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
       renderItem={({ item }) => (
         <TouchableOpacity onPress={() => history.push(`/repo/${item.id}`)}>
           <RepositoryItem item={item} />
@@ -36,7 +38,7 @@ const RepositoryList = () => {
   const [orderDirection, setOrderDirection] = useState('DESC');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [debounceSearchKeyword] = useDebounce(searchKeyword, 500);
-  const { data } = useRepositories({ orderBy, orderDirection, searchKeyword: debounceSearchKeyword });
+  const { data, fetchMore } = useRepositories({ first: 5, orderBy, orderDirection, searchKeyword: debounceSearchKeyword });
 
   const setSortCriteria = (criteria) => {
     if (criteria === 'latest') {
@@ -51,7 +53,15 @@ const RepositoryList = () => {
     }
   };
 
-  return <RepositoryListContainer repositories={data ? data.repositories : null} setSortCriteria={setSortCriteria} setSearchKeyword={setSearchKeyword} />;
+  const onEndReached = () => {
+    fetchMore();
+  };
+
+  return <RepositoryListContainer
+    repositories={data ? data.repositories : null}
+    setSortCriteria={setSortCriteria}
+    setSearchKeyword={setSearchKeyword}
+    onEndReached={onEndReached} />;
 };
 
 export default RepositoryList;

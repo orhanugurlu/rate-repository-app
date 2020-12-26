@@ -8,6 +8,7 @@ import SignIn from './SignIn';
 import RepositoryDetail from './RepositoryDetail';
 import CreateReview from './CreateReview';
 import SignUp from './SignUp';
+import UserReviews from './UserReviews';
 
 const Main = () => {
   const match = useRouteMatch('/repo/:id');
@@ -28,6 +29,9 @@ const Main = () => {
         </Route>
         <Route path='/createReview' exact>
           <CreateReview />
+        </Route>
+        <Route path='/myReviews' exact>
+          <UserReviews />
         </Route>
         <Route path='/signUp' exact>
           <SignUp />
